@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1017392932593",
+    "project_id": "friends-chat-5b40e",
+    "storage_bucket": "friends-chat-5b40e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017392932593:android:d15913ab85c9c6def2ab50",
+        "android_client_info": {
+          "package_name": "com.example.scholar_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo-dIsggCXPsOZcdFy8ZkPD-pnhwEgxgM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
