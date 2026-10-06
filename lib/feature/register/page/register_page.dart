@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:scholar_chat/core/constants.dart';
+import 'package:scholar_chat/core/routes/app_navigator.dart';
 import 'package:scholar_chat/core/widgets/custom_button.dart';
 import 'package:scholar_chat/core/widgets/custom_text_field.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff2B475E),
+      backgroundColor: kPrimaryColor,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           children: [
             Spacer(flex: 1),
-            Image.asset('assets/images/scholar.png'),
+            Image.asset('assets/images/scholar.png', width: 100),
             Text(
               'Scholar Chat',
               style: TextStyle(
@@ -27,7 +29,7 @@ class LoginPage extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'LOGIN',
+                  'Register',
                   style: TextStyle(fontSize: 24, color: Colors.white),
                 ),
               ],
@@ -38,20 +40,17 @@ class LoginPage extends StatelessWidget {
 
             CustomTextField(hintText: 'password'),
             const SizedBox(height: 20),
- 
-            CustomButton(text: 'login', onPressed: () {}),
+
+            CustomButton(text: 'Register', onPressed: () {}),
             Row(
               children: [
                 Text(
-                  "don't have an account?",
+                  "Already have an account..?",
                   style: TextStyle(color: Colors.white),
                 ),
                 TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Register",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  onPressed: () => AppNavigator.pop(context),
+                  child: Text("Login", style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),

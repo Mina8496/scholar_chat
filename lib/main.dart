@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scholar_chat/login/page/login_page.dart';
+import 'package:scholar_chat/feature/login/page/login_page.dart';
 
 void main() {
   runApp(const ScholarChat());
