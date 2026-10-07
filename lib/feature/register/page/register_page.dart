@@ -35,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               children: [
                 Spacer(flex: 1),
-                Image.asset('assets/images/scholar.png'),
+                Image.asset(kLogo),
                 Text(
                   'Scholar Chat',
                   style: TextStyle(
@@ -92,7 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         if (mounted) {
                           AppSnackBar.success(context, 'success.');
                         }
-                        AppNavigator.pushAndRemoveUntil(context, ChatPage());
+                        AppNavigator.push(context, ChatPage());
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'weak-password') {
                           AppSnackBar.info(

@@ -29,122 +29,122 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: kPrimaryColor,
       body: isLoading
           ? Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Form(
-            key: fromKey,
-            child: Column(
-              children: [
-                Spacer(flex: 1),
-                Image.asset('assets/images/scholar.png'),
-                Text(
-                  'Scholar Chat',
-                  style: TextStyle(
-                    fontSize: 32,
-                    color: Colors.white,
-                    fontFamily: 'pacifico',
-                  ),
-                ),
-                Spacer(flex: 1),
-                Row(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Form(
+                key: fromKey,
+                child: Column(
                   children: [
+                    Spacer(flex: 1),
+                    Image.asset(kLogo),
                     Text(
-                      'LOGIN',
-                      style: TextStyle(fontSize: 24, color: Colors.white),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                CustomTextField(
-                  controller: emailController,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'please enter email address';
-                    }
-                    if (!value.contains('@')) {
-                      return 'invalid email address';
-                    }
-                    return null;
-                  },
-                  hintText: 'email',
-                ),
-                const SizedBox(height: 10),
-
-                CustomTextField(
-                  controller: passwordController,
-                  validator: (value) {
-                    if (value == null || value.length < 6) {
-                      return 'password is too short';
-                    }
-                    return null;
-                  },
-                  hintText: 'password',
-                ),
-                const SizedBox(height: 20),
-
-                CustomButton(
-                  text: 'login',
-                  onPressed: () async {
-                    if (fromKey.currentState!.validate()) {
-                      isLoading = false;
-                      setState(() {});
-                      try {
-                        await loginUser();
-                        if (mounted) {
-                          AppSnackBar.success(context, 'success.');
-                        }
-                        AppNavigator.pushAndRemoveUntil(context, ChatPage());
-                      } on FirebaseAuthException catch (e) {
-                        if (!mounted) return;
-                        if (e.code == 'user-not-found' ||
-                            e.code == 'wrong-password' ||
-                            e.code == 'invalid-credential') {
-                          AppSnackBar.info(
-                            context,
-                            'The email or password is incorrect.',
-                          );
-                        } else {
-                          AppSnackBar.error(
-                            context,
-                            'Unable to sign in. Please try again.',
-                          );
-                        }
-                      } catch (_) {
-                        if (mounted) {
-                          AppSnackBar.error(
-                            context,
-                            'Unable to sign in. Please try again.',
-                          );
-                        }
-                      } finally {
-                        if (mounted) {
-                          isLoading = true;
-                          setState(() {});
-                        }
-                      }
-                    }
-                  },
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "don't have an account?",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    TextButton(
-                      onPressed: () =>
-                          AppNavigator.push(context, RegisterPage()),
-                      child: Text(
-                        "Register",
-                        style: TextStyle(color: Colors.white),
+                      'Scholar Chat',
+                      style: TextStyle(
+                        fontSize: 32,
+                        color: Colors.white,
+                        fontFamily: 'pacifico',
                       ),
                     ),
+                    Spacer(flex: 1),
+                    Row(
+                      children: [
+                        Text(
+                          'LOGIN',
+                          style: TextStyle(fontSize: 24, color: Colors.white),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    CustomTextField(
+                      controller: emailController,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'please enter email address';
+                        }
+                        if (!value.contains('@')) {
+                          return 'invalid email address';
+                        }
+                        return null;
+                      },
+                      hintText: 'email',
+                    ),
+                    const SizedBox(height: 10),
+
+                    CustomTextField(
+                      controller: passwordController,
+                      validator: (value) {
+                        if (value == null || value.length < 6) {
+                          return 'password is too short';
+                        }
+                        return null;
+                      },
+                      hintText: 'password',
+                    ),
+                    const SizedBox(height: 20),
+
+                    CustomButton(
+                      text: 'login',
+                      onPressed: () async {
+                        if (fromKey.currentState!.validate()) {
+                          isLoading = false;
+                          setState(() {});
+                          try {
+                            await loginUser();
+                            if (mounted) {
+                              AppSnackBar.success(context, 'success.');
+                            }
+                            AppNavigator.push(context, ChatPage());
+                          } on FirebaseAuthException catch (e) {
+                            if (!mounted) return;
+                            if (e.code == 'user-not-found' ||
+                                e.code == 'wrong-password' ||
+                                e.code == 'invalid-credential') {
+                              AppSnackBar.info(
+                                context,
+                                'The email or password is incorrect.',
+                              );
+                            } else {
+                              AppSnackBar.error(
+                                context,
+                                'Unable to sign in. Please try again.',
+                              );
+                            }
+                          } catch (_) {
+                            if (mounted) {
+                              AppSnackBar.error(
+                                context,
+                                'Unable to sign in. Please try again.',
+                              );
+                            }
+                          } finally {
+                            if (mounted) {
+                              isLoading = true;
+                              setState(() {});
+                            }
+                          }
+                        }
+                      },
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "don't have an account?",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        TextButton(
+                          onPressed: () =>
+                              AppNavigator.push(context, RegisterPage()),
+                          child: Text(
+                            "Register",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Spacer(flex: 2),
                   ],
                 ),
-                Spacer(flex: 2),
-              ],
-            ),
-          ),
-        )
+              ),
+            )
           : const Center(child: CircularProgressIndicator()),
     );
   }
