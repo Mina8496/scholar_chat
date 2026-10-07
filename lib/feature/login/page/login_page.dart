@@ -1,4 +1,3 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:scholar_chat/core/constants.dart';
@@ -26,11 +25,10 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ConditionalBuilder(
-      condition: isLoading,
-      builder: (context) => Scaffold(
-        backgroundColor: kPrimaryColor,
-        body: Padding(
+    return Scaffold(
+      backgroundColor: kPrimaryColor,
+      body: isLoading
+          ? Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Form(
             key: fromKey,
@@ -146,9 +144,8 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           ),
-        ),
-      ),
-      fallback: (context) => Center(child: CircularProgressIndicator()),
+        )
+          : const Center(child: CircularProgressIndicator()),
     );
   }
 
