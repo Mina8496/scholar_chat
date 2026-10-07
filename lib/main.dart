@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:scholar_chat/core/helper/app_snackbar.dart';
 import 'package:scholar_chat/feature/login/page/login_page.dart';
 import 'package:scholar_chat/firebase_options.dart';
 
@@ -14,6 +15,9 @@ class ScholarChat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: const LoginPage());
+    return MaterialApp(
+      scaffoldMessengerKey: AppSnackBar.messengerKey,
+      home: const LoginPage(),
+    );
   }
 }

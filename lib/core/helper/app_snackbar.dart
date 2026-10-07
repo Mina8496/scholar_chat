@@ -3,26 +3,33 @@ import 'package:flutter/material.dart';
 class AppSnackBar {
   AppSnackBar._();
 
+  static final messengerKey = GlobalKey<ScaffoldMessengerState>();
+
   static void _show(BuildContext context, String message, Color color,
       IconData icon) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          backgroundColor: color,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final messenger = messengerKey.currentState;
+      if (messenger == null || !messenger.mounted) return;
+
+      messenger
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          SnackBar(
+            backgroundColor: color,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            content: Row(
+              children: [
+                Icon(icon, color: Colors.white),
+                const SizedBox(width: 10),
+                Expanded(child: Text(message)),
+              ],
+            ),
           ),
-          content: Row(
-            children: [
-              Icon(icon, color: Colors.white),
-              const SizedBox(width: 10),
-              Expanded(child: Text(message)),
-            ],
-          ),
-        ),
-      );
+        );
+    });
   }
 
   static void success(BuildContext context, String message) =>
