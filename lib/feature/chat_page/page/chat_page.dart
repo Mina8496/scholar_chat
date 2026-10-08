@@ -5,17 +5,47 @@ import 'package:scholar_chat/core/widgets/custom_text_field.dart';
 import 'package:scholar_chat/feature/chat_page/model/message.dart';
 import 'package:scholar_chat/feature/chat_page/widget/chat_bubule.dart';
 
-// ignore: must_be_immutable
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
   final String email;
-  ChatPage({super.key, required this.email});
+  const ChatPage({super.key, required this.email});
 
-  CollectionReference messages = FirebaseFirestore.instance.collection(
-    kMessagesCollection,
-  );
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  final CollectionReference messages =
+      FirebaseFirestore.instance.collection(kMessagesCollection);
 
   final controller = TextEditingController();
   final _controllerScroll = ScrollController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    _controllerScroll.dispose();
+    super.dispose();
+  }
+
+  void _sendMessage(String data) {
+    if (data.trim().isEmpty) return;
+
+    messages.add({
+      kMessage: data,
+      kCreatedAt: FieldValue.serverTimestamp(), // وقت السيرفر
+      'id': widget.email,
+    });
+    controller.clear();
+
+    if (_controllerScroll.hasClients) {
+      _controllerScroll.animateTo(
+        0,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.fastLinearToSlowEaseIn,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -23,11 +53,10 @@ class ChatPage extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final messageList = snapshot.data!.docs
-              .map(
-                (document) =>
-                    Message.fromJson(document.data() as Map<String, dynamic>),
-              )
+              .map((doc) =>
+                  Message.fromJson(doc.data() as Map<String, dynamic>))
               .toList();
+
           return Scaffold(
             appBar: AppBar(
               backgroundColor: kPrimaryColor,
@@ -36,7 +65,8 @@ class ChatPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(kLogo, height: 50),
-                  Text('Scholar Chat', style: TextStyle(color: Colors.white)),
+                  const Text('Scholar Chat',
+                      style: TextStyle(color: Colors.white)),
                 ],
               ),
             ),
@@ -48,44 +78,29 @@ class ChatPage extends StatelessWidget {
                     controller: _controllerScroll,
                     itemCount: messageList.length,
                     itemBuilder: (context, index) {
-                      return messageList[index].id == email
+                      return messageList[index].id == widget.email
                           ? ChatBubule(message: messageList[index])
                           : ChatBubuleForAfrind(message: messageList[index]);
                     },
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsGeometry.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: CustomTextField(
                     controller: controller,
-                    onSubmitted: (data) {
-                      messages.add({
-                        kMessage: data,
-                        kCreatedAt: DateTime.now(),
-                        'id': email,
-                      });
-                      controller.clear();
-                      _controllerScroll.animateTo(
-                        0,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.fastLinearToSlowEaseIn,
-                      );
-                    },
-
-                    hintStyle: TextStyle(color: kPrimaryColor),
+                    onSubmitted: _sendMessage,
+                    hintStyle: const TextStyle(color: kPrimaryColor),
                     hintText: 'Send Message',
-                    borderSide: BorderSide(color: kPrimaryColor),
-                    suffixIcon: Icon(Icons.send, color: kPrimaryColor),
+                    borderSide: const BorderSide(color: kPrimaryColor),
+                    suffixIcon: const Icon(Icons.send, color: kPrimaryColor),
                   ),
                 ),
               ],
             ),
           );
         } else {
-          return Center(
-            child: Column(
-              children: [CircularProgressIndicator(), Text('Loading ...')],
-            ),
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
           );
         }
       },
