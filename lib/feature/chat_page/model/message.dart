@@ -6,8 +6,6 @@ class Message {
   Message(this.message);
 
   factory Message.fromJson(Map<String, dynamic> jsonData) {
-    // Older chat entries were saved under `messages` (plural).
-    final value = jsonData[kMessage] ?? jsonData['messages'];
-    return Message(value is String ? value : '');
+    return Message(jsonData[kMessage]);
   }
 }
