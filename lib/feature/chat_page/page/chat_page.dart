@@ -5,23 +5,27 @@ import 'package:scholar_chat/core/widgets/custom_text_field.dart';
 import 'package:scholar_chat/feature/chat_page/model/message.dart';
 import 'package:scholar_chat/feature/chat_page/widget/chat_bubule.dart';
 
+// ignore: must_be_immutable
 class ChatPage extends StatelessWidget {
+  ChatPage({super.key});
+
   CollectionReference messages = FirebaseFirestore.instance.collection(
     kMessagesCollection,
   );
 
-  ChatPage({super.key});
   final controller = TextEditingController();
+  final _controllerScroll = ScrollController();
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<QuerySnapshot>(
-      future: messages.get(),
+    return StreamBuilder<QuerySnapshot>(
+      stream: messages.orderBy(kCreatedAt).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final messageList = snapshot.data!.docs
-              .map((document) => Message.fromJson(
-                    document.data() as Map<String, dynamic>,
-                  ))
+              .map(
+                (document) =>
+                    Message.fromJson(document.data() as Map<String, dynamic>),
+              )
               .toList();
           return Scaffold(
             appBar: AppBar(
@@ -39,6 +43,7 @@ class ChatPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ListView.builder(
+                    controller: _controllerScroll,
                     itemCount: messageList.length,
                     itemBuilder: (context, index) =>
                         ChatBubule(message: messageList[index]),
@@ -49,8 +54,16 @@ class ChatPage extends StatelessWidget {
                   child: CustomTextField(
                     controller: controller,
                     onSubmitted: (data) {
-                      messages.add({kMessage: data});
+                      messages.add({
+                        kMessage: data,
+                        kCreatedAt: DateTime.now(),
+                      });
                       controller.clear();
+                      _controllerScroll.animateTo(
+                        _controllerScroll.position.maxScrollExtent,
+                        duration:const  Duration(seconds: 1),
+                        curve: Curves.fastLinearToSlowEaseIn,
+                      );
                     },
 
                     hintStyle: TextStyle(color: kPrimaryColor),
