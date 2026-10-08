@@ -7,7 +7,8 @@ import 'package:scholar_chat/feature/chat_page/widget/chat_bubule.dart';
 
 // ignore: must_be_immutable
 class ChatPage extends StatelessWidget {
-  ChatPage({super.key});
+  final String email;
+  ChatPage({super.key, required this.email});
 
   CollectionReference messages = FirebaseFirestore.instance.collection(
     kMessagesCollection,
@@ -18,7 +19,7 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: messages.orderBy(kCreatedAt).snapshots(),
+      stream: messages.orderBy(kCreatedAt, descending: true).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final messageList = snapshot.data!.docs
@@ -43,6 +44,7 @@ class ChatPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ListView.builder(
+                    reverse: true,
                     controller: _controllerScroll,
                     itemCount: messageList.length,
                     itemBuilder: (context, index) =>
@@ -57,11 +59,12 @@ class ChatPage extends StatelessWidget {
                       messages.add({
                         kMessage: data,
                         kCreatedAt: DateTime.now(),
+                        'id': email,
                       });
                       controller.clear();
                       _controllerScroll.animateTo(
-                        _controllerScroll.position.maxScrollExtent,
-                        duration:const  Duration(seconds: 1),
+                        0,
+                        duration: const Duration(milliseconds: 500),
                         curve: Curves.fastLinearToSlowEaseIn,
                       );
                     },
