@@ -4,7 +4,7 @@ import 'package:scholar_chat/core/constants.dart';
 import 'package:scholar_chat/core/routes/app_navigator.dart';
 import 'package:scholar_chat/core/helper/app_snackbar.dart';
 import 'package:scholar_chat/core/widgets/custom_button.dart';
-import 'package:scholar_chat/core/widgets/custom_text_field.dart';
+import 'package:scholar_chat/core/widgets/custom_text_form_field.dart';
 import 'package:scholar_chat/feature/chat_page/page/chat_page.dart';
 import 'package:scholar_chat/feature/register/page/register_page.dart';
 
@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    CustomTextField(
+                    CustomTextFormField(
                       controller: emailController,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 10),
 
-                    CustomTextField(
+                    CustomTextFormField(
                       controller: passwordController,
                       validator: (value) {
                         if (value == null || value.length < 6) {
