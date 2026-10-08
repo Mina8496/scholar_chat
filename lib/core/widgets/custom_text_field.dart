@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:scholar_chat/core/constants.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? hintText;
+  final TextStyle? hintStyle;
   final String? labelText;
   final String? errorText;
 
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final Widget? suffix;
+
+  final BorderSide? borderSide;
 
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
@@ -29,10 +31,12 @@ class CustomTextField extends StatelessWidget {
     super.key,
     this.controller,
     this.hintText,
+    this.hintStyle,
     this.labelText,
     this.errorText,
     this.prefixIcon,
     this.suffixIcon,
+    this.borderSide,
     this.keyboardType,
     this.textInputAction,
     this.obscureText = false,
@@ -63,7 +67,7 @@ class CustomTextField extends StatelessWidget {
 
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: TextStyle(color: Colors.grey),
+        hintStyle: hintStyle ?? const TextStyle(color: Colors.white),
         labelText: labelText,
         errorText: errorText,
         suffix: suffix,
@@ -73,13 +77,13 @@ class CustomTextField extends StatelessWidget {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
 
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: kPrimaryColor),
+          borderSide: borderSide ?? const BorderSide(color: Colors.white),
           borderRadius: BorderRadius.circular(12),
         ),
 
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: kPrimaryColor, width: 2),
+          borderSide: borderSide ?? BorderSide(color: Colors.white, width: 2),
         ),
 
         contentPadding: const EdgeInsets.symmetric(

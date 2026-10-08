@@ -30,8 +30,9 @@ class ChatPage extends StatelessWidget {
           Padding(
             padding: EdgeInsetsGeometry.all(16.0),
             child: CustomTextField(
+              hintStyle: TextStyle(color: kPrimaryColor),
               hintText: 'Send Message',
-            
+              borderSide: BorderSide(color: kPrimaryColor),
               suffixIcon: Icon(Icons.send, color: kPrimaryColor),
             ),
           ),
