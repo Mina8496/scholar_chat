@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final String? hintText;
   final TextStyle? hintStyle;
@@ -23,11 +23,12 @@ class CustomTextField extends StatelessWidget {
   final int maxLines;
   final int? maxLength;
 
+  final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final VoidCallback? onTap;
-  final void Function(String)? onSubmitted;
+  final void Function(String?)? onSaved;
 
-  const CustomTextField({
+  const CustomTextFormField({
     super.key,
     this.controller,
     this.hintText,
@@ -36,7 +37,6 @@ class CustomTextField extends StatelessWidget {
     this.errorText,
     this.prefixIcon,
     this.suffixIcon,
-    this.suffix,
     this.borderSide,
     this.keyboardType,
     this.textInputAction,
@@ -45,14 +45,16 @@ class CustomTextField extends StatelessWidget {
     this.readOnly = false,
     this.maxLines = 1,
     this.maxLength,
+    this.validator,
     this.onChanged,
     this.onTap,
-    this.onSubmitted,
+    this.onSaved,
+    this.suffix,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       textInputAction: textInputAction,
@@ -61,9 +63,11 @@ class CustomTextField extends StatelessWidget {
       readOnly: readOnly,
       maxLines: obscureText ? 1 : maxLines,
       maxLength: maxLength,
+      validator: validator,
       onChanged: onChanged,
       onTap: onTap,
-      onSubmitted: onSubmitted,
+      onSaved: onSaved,
+
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: hintStyle ?? const TextStyle(color: Colors.white),
@@ -72,16 +76,19 @@ class CustomTextField extends StatelessWidget {
         suffix: suffix,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
+
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+
         enabledBorder: OutlineInputBorder(
           borderSide: borderSide ?? const BorderSide(color: Colors.white),
           borderRadius: BorderRadius.circular(12),
         ),
+
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide:
-              borderSide ?? const BorderSide(color: Colors.white, width: 2),
+          borderSide: borderSide ?? BorderSide(color: Colors.white, width: 2),
         ),
+
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 14,
