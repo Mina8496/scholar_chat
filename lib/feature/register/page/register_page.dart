@@ -92,7 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             if (mounted) {
                               AppSnackBar.success(context, 'success.');
                             }
-                            AppNavigator.push(context, ChatPage());
+                            AppNavigator.push(context, ChatPage(email: emailController.text,));
                           } on FirebaseAuthException catch (e) {
                             if (e.code == 'weak-password') {
                               AppSnackBar.info(
