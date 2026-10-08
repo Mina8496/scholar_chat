@@ -70,6 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 10),
 
                     CustomTextFormField(
+                      obscureText: true,
                       controller: passwordController,
                       validator: (value) {
                         if (value == null || value.length < 6) {
@@ -92,7 +93,10 @@ class _LoginPageState extends State<LoginPage> {
                             if (mounted) {
                               AppSnackBar.success(context, 'success.');
                             }
-                            AppNavigator.push(context, ChatPage(email: emailController.text,));
+                            AppNavigator.push(
+                              context,
+                              ChatPage(email: emailController.text),
+                            );
                           } on FirebaseAuthException catch (e) {
                             if (!mounted) return;
                             if (e.code == 'user-not-found' ||

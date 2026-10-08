@@ -47,8 +47,11 @@ class ChatPage extends StatelessWidget {
                     reverse: true,
                     controller: _controllerScroll,
                     itemCount: messageList.length,
-                    itemBuilder: (context, index) =>
-                        ChatBubule(message: messageList[index]),
+                    itemBuilder: (context, index) {
+                      return messageList[index].id == email
+                          ? ChatBubule(message: messageList[index])
+                          : ChatBubuleForAfrind(message: messageList[index]);
+                    },
                   ),
                 ),
                 Padding(
