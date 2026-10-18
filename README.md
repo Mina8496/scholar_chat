@@ -4,17 +4,6 @@ Scholar Chat is a Flutter messaging app with email and password authentication a
 
 ## App preview
 
-Add your screenshots and demo video to the paths below, or update the paths to match your filenames:
-
-```text
-docs/
-+-- screenshots/
-|   +-- login.png
-|   +-- register.png
-|   +-- chat.png
-|   +-- demo.mp4
-```
-
 ### Screenshots
 
 | Login | Register | Chat |
@@ -64,7 +53,7 @@ docs/
 1. Clone the repository and open its directory:
 
    ```bash
-   git clone <repository-url>
+   git clone <https://github.com/Mina8496/scholar_chat>
    cd scholar_chat
    ```
 
@@ -131,12 +120,6 @@ lib/
 - App logo: `assets/images/scholar.png`
 - Pacifico font: `assets/fonts/Pacifico-Regular.ttf`
 
-## Contributing
-
-1. Create a branch for your change.
-2. Keep changes focused and follow the existing Flutter project structure.
-3. Open a pull request with a summary and screenshots or a demo video for UI changes.
-
 ## License
 
-No license has been added yet. Add a `LICENSE` file before redistributing this project.
+No license has been added yet.
