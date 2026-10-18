@@ -31,7 +31,7 @@ class ChatPage extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: BlocConsumer(
+            child: BlocConsumer<ChatCubit, ChatState>(
               listener: (context, state) {
                 if (state is ChatSuccessState) {
                   messageList = state.messageList;
@@ -57,6 +57,7 @@ class ChatPage extends StatelessWidget {
                 BlocProvider.of<ChatCubit>(
                   context,
                 ).sendMessage(message: data, email: email);
+                controller.clear();
               },
               hintStyle: const TextStyle(color: kPrimaryColor),
               hintText: 'Send Message',

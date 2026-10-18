@@ -6,6 +6,7 @@ import 'package:scholar_chat/core/routes/app_navigator.dart';
 import 'package:scholar_chat/core/helper/app_snackbar.dart';
 import 'package:scholar_chat/core/widgets/custom_button.dart';
 import 'package:scholar_chat/core/widgets/custom_text_form_field.dart';
+import 'package:scholar_chat/feature/chat_page/manger/chat_cubit.dart';
 import 'package:scholar_chat/feature/chat_page/page/chat_page.dart';
 import 'package:scholar_chat/feature/register/manger/register_cubit.dart';
 import 'package:scholar_chat/feature/register/manger/register_state.dart';
@@ -28,6 +29,8 @@ class RegisterPage extends StatelessWidget {
         if (state is RegisterLoadingState) {
           isLoading = true;
         } else if (state is RegisterSuccessState) {
+                    BlocProvider.of<ChatCubit>(context).getMessages();
+
           AppNavigator.push(context, ChatPage(email: emailController.text));
         } else if (state is RegisterFailureState) {
           AppSnackBar.error(context, state.errorMessage);

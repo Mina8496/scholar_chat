@@ -25,9 +25,15 @@ class ChatCubit extends Cubit<ChatState> {
   void getMessages() {
     messages.orderBy(kCreatedAt, descending: true).snapshots().listen((event) {
       List<Message> messageList = [];
+      print(messageList);
       for (var doc in event.docs) {
-        messageList.add(Message.fromJson(doc));
+        print('doc ${doc}');
+        final data = doc.data();
+        if (data is Map<String, dynamic>) {
+          messageList.add(Message.fromJson(data));
+        }
       }
+      print('success');
       emit(ChatSuccessState(messageList: messageList));
     });
   }
