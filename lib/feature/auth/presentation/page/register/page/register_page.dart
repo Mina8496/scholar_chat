@@ -6,8 +6,8 @@ import 'package:scholar_chat/core/routes/app_navigator.dart';
 import 'package:scholar_chat/core/helper/app_snackbar.dart';
 import 'package:scholar_chat/core/widgets/custom_button.dart';
 import 'package:scholar_chat/core/widgets/custom_text_form_field.dart';
-import 'package:scholar_chat/feature/auth/presentation/manger/auth_cubit.dart';
-import 'package:scholar_chat/feature/auth/presentation/manger/auth_state.dart';
+import 'package:scholar_chat/feature/auth/presentation/manger/cubit/auth_cubit.dart';
+import 'package:scholar_chat/feature/auth/presentation/manger/cubit/auth_state.dart';
 import 'package:scholar_chat/feature/chat_page/manger/chat_cubit.dart';
 import 'package:scholar_chat/feature/chat_page/page/chat_page.dart';
 
