@@ -6,10 +6,10 @@ import 'package:scholar_chat/core/routes/app_navigator.dart';
 import 'package:scholar_chat/core/helper/app_snackbar.dart';
 import 'package:scholar_chat/core/widgets/custom_button.dart';
 import 'package:scholar_chat/core/widgets/custom_text_form_field.dart';
+import 'package:scholar_chat/feature/auth/presentation/manger/auth_cubit.dart';
+import 'package:scholar_chat/feature/auth/presentation/manger/auth_state.dart';
 import 'package:scholar_chat/feature/chat_page/manger/chat_cubit.dart';
 import 'package:scholar_chat/feature/chat_page/page/chat_page.dart';
-import 'package:scholar_chat/feature/register/manger/register_cubit.dart';
-import 'package:scholar_chat/feature/register/manger/register_state.dart';
 
 class RegisterPage extends StatelessWidget {
   final emailController = TextEditingController();
@@ -24,7 +24,7 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isLoading = true;
 
-    return BlocConsumer<RegisterCubit, RegisterState>(
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is RegisterLoadingState) {
           isLoading = true;
@@ -98,7 +98,7 @@ class RegisterPage extends StatelessWidget {
                     text: 'Register',
                     onPressed: () async {
                       if (fromKey.currentState!.validate()) {
-                        BlocProvider.of<RegisterCubit>(context).registerUser(
+                        BlocProvider.of<AuthCubit>(context).registerUser(
                           email: emailController.text,
                           password: passwordController.text,
                         );
